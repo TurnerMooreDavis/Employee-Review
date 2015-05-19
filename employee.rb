@@ -1,6 +1,7 @@
 require 'byebug'
 require "./db_setup"
 class Employee < ActiveRecord::Base
+  belongs_to :deparment
     @reviews = []
     @parsed = Array.new
     @positive_words = ["encourage","positive","well","good","improve","useful","value","pleasure","quick","willing","help","success","happy","responsive","effectiv","consistent","satisfied","impress","productiv","great","asset","enjoy","perfect","retain"]
@@ -41,9 +42,9 @@ class Employee < ActiveRecord::Base
     @parsed.each &calculator
     # byebug
     if total_score <= 0
-      @satisfactory = false
+      self.satisfactory = false
     else
-      @satisfactory = true
+      self.satisfactory = true
     end
     return total_score
   end

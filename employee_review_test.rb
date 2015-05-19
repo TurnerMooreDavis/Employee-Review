@@ -12,6 +12,10 @@ ActiveRecord::Base.establish_connection(
 )
 ActiveRecord::Migration.verbose = false
 class ReviewTest < Minitest::Test
+  
+  def self.test_order
+    :alpha
+  end
 
   def setup
     DepartmentMigration.migrate(:up)
@@ -29,7 +33,7 @@ class ReviewTest < Minitest::Test
   end
 
   def test_classes_have_names
-    assert_equal "engineering", Department.new("engineering").name
+    assert_equal "engineering", Department.new(name: "engineering").name
     assert_equal "Ryan", Employee.new(name:"Ryan").name
   end
 
@@ -39,22 +43,22 @@ class ReviewTest < Minitest::Test
 
   def test_add_employee_to_department
     fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
-    eng = Department.new("engineering")
+    eng = Department.new(name: "engineering")
     eng.add_employee(fred)
     assert eng.employees
   end
 
   def test_departments_have_employees
     fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
-    eng = Department.new("engineering")
+    eng = Department.new(name: "engineering")
     eng.add_employee(fred)
-    assert eng.employees.include?("Freddy")
+    assert_equal "Freddy", eng.employees.first.name
   end
 
   def test_retrieve_info
     fred = Employee.new(email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000, name: "Freddy")
     mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
-    eng = Department.new("engineering")
+    eng = Department.new(name: "engineering")
     assert_equal "Freddy", fred.name
     assert_equal 70000, mary.salary
     assert_equal "engineering", eng.name
@@ -63,7 +67,7 @@ class ReviewTest < Minitest::Test
   def test_total_salaries
     fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
     mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
-    eng = Department.new("engineering")
+    eng = Department.new(name: "engineering")
     eng.add_employee(fred)
     eng.add_employee(mary)
     assert_equal fred.salary+mary.salary, eng.total_dep_salaries
@@ -96,7 +100,7 @@ class ReviewTest < Minitest::Test
     fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
     mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
     jordan = Employee.new(name: "Jordan", email: "jordan@gmail.com", phone_number: 919-434-5602, salary: 60000)
-    eng = Department.new("engineering")
+    eng = Department.new(name: "engineering")
     eng.add_employee(jordan)
     jordan.is_satisfactory(true)
     eng.add_employee(fred)
@@ -114,7 +118,7 @@ class ReviewTest < Minitest::Test
     fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
     mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
     jordan = Employee.new(name: "Jordan", email: "jordan@gmail.com", phone_number: 919-434-5602, salary: 60000)
-    eng = Department.new("engineering")
+    eng = Department.new(name: "engineering")
     eng.add_employee(jordan)
     jordan.is_satisfactory(true)
     eng.add_employee(fred)
