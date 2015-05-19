@@ -8,6 +8,7 @@ class EmployeeMigration < ActiveRecord::Migration
       t.string :email
       t.string :phone_number
       t.boolean  :satisfactory
+      t.text :review
     end
   end
 end
