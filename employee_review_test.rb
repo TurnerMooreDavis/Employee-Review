@@ -3,6 +3,8 @@ require 'minitest/pride'
 require "./db_setup"
 require "./employee.rb"
 require "./department.rb"
+require "./company.rb"
+require "./company_migration.rb"
 require "./employee_migration.rb"
 require "./department_migration.rb"
 
@@ -17,11 +19,13 @@ class ReviewTest < Minitest::Test
   def setup
     DepartmentMigration.migrate(:up)
     EmployeeMigration.migrate(:up)
+    CompanyMigration.migrate(:up)
   end
 
   def teardown
     DepartmentMigration.migrate(:down)
     EmployeeMigration.migrate(:down)
+    CompanyMigration.migrate(:down)
   end
 
   def test_classes_exist
@@ -220,9 +224,25 @@ class ReviewTest < Minitest::Test
   end
 
   def test_compare_department_numbers
-
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    jordan = Employee.create(name: "Jordan", email: "jordan@gmail.com", phone_number: 919-434-5602, salary: 60000)
+    bob = Employee.create(name: "bob", email: "bob@gmail.com", phone_number: 919-234-3661, salary: 70000)
+    eng = Department.create(name: "engineering")
+    hr = Department.create(name: "hr")
+    marketing = Department.create(name: "marketing")
+    fun = Company.create(name: "FunCity")
+    eng.add_employee(jordan)
+    eng.add_employee(fred)
+    hr.add_employee(mary)
+    marketing.add_employee(bob)
+    fun.add_department(eng)
+    fun.add_department(hr)
+    fun.add_department(marketing)
+    assert_equal eng, fun.most_employees
   end
 
+  def 
 
 
 
