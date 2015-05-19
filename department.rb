@@ -1,5 +1,6 @@
 require "byebug"
-class Department
+require "./db_setup"
+class Department < ActiveRecord::Base
   attr_reader :name, :employees
   def initialize(name)
     @name = name

@@ -1,27 +1,21 @@
 require 'byebug'
-class Employee
-  attr_reader :name, :reviews, :parsed
-  attr_accessor :salary, :satisfactory, :positive_words, :negative_words
-  def initialize(name:, email:"", phone_number: 000-000-0000, salary: 0)
-    @name = name
-    @salary = salary
+require "./db_setup"
+class Employee < ActiveRecord::Base
     @reviews = []
     @parsed = Array.new
-    @satisfactory = nil
     @positive_words = ["encourage","positive","well","good","improve","useful","value","pleasure","quick","willing","help","success","happy","responsive","effectiv","consistent","satisfied","impress","productiv","great","asset","enjoy","perfect","retain"]
     @negative_words = ["difficult", "confus", "negative", "inadequate","limit","fault","disagree","concern","slow","need","lack","not usefull","not done well","off topic"]
-  end
 
   def add_review(text)
     @reviews << text
   end
 
   def is_satisfactory(boolean)
-    @satisfactory = boolean
+    self.satisfactory = boolean
   end
 
   def give_raise(amount)
-    @salary += amount
+    self.salary += amount
   end
 
   def parse_review

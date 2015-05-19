@@ -1,10 +1,27 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-
+require "./db_setup"
 require "./employee.rb"
 require "./department.rb"
+require "./employee_migration.rb"
+require "./department_migration.rb"
 
+ActiveRecord::Base.establish_connection(
+  adapter:  'sqlite3',
+  database: 'test.sqlite3'
+)
+ActiveRecord::Migration.verbose = false
 class ReviewTest < Minitest::Test
+
+  def setup
+    DepartmentMigration.migrate(:up)
+    EmployeeMigration.migrate(:up)
+  end
+
+  def teardown
+    DepartmentMigration.migrate(:down)
+    EmployeeMigration.migrate(:down)
+  end
 
   def test_classes_exist
     assert Employee
