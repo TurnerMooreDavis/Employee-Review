@@ -14,12 +14,6 @@ class Employee < ActiveRecord::Base
     self.salary += amount
   end
 
-  # def parse_review
-  #   sentances = review.split(/\.|:/)
-  #   sentances.each {|s| parsed_text << s}
-  #   return true
-  # end
-
   def analyze(review)
     hold_positive = []
     hold_negative = []
