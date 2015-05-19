@@ -30,41 +30,41 @@ class ReviewTest < Minitest::Test
   end
 
   def test_classes_have_names
-    assert_equal "engineering", Department.new(name: "engineering").name
-    assert_equal "Ryan", Employee.new(name:"Ryan").name
+    assert_equal "engineering", Department.create(name: "engineering").name
+    assert_equal "Ryan", Employee.create(name:"Ryan").name
   end
 
   def test_employee_inputs
-    assert Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    assert Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
   end
 
   def test_add_employee_to_department
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
-    eng = Department.new(name: "engineering")
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    eng = Department.create(name: "engineering")
     eng.add_employee(fred)
     assert eng.employees
   end
 
   def test_departments_have_employees
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
-    eng = Department.new(name: "engineering")
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    eng = Department.create(name: "engineering")
     eng.add_employee(fred)
     assert_equal "Freddy", eng.employees.first.name
   end
 
   def test_retrieve_info
-    fred = Employee.new(email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000, name: "Freddy")
-    mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
-    eng = Department.new(name: "engineering")
+    fred = Employee.create(email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000, name: "Freddy")
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    eng = Department.create(name: "engineering")
     assert_equal "Freddy", fred.name
     assert_equal 70000, mary.salary
     assert_equal "engineering", eng.name
   end
 
   def test_total_salaries
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
-    mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
-    eng = Department.new(name: "engineering")
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    eng = Department.create(name: "engineering")
     eng.add_employee(fred)
     eng.add_employee(mary)
     assert_equal fred.salary+mary.salary, eng.total_dep_salaries
@@ -73,31 +73,31 @@ class ReviewTest < Minitest::Test
   end
 
   def test_add_review
-    mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
     mary.add_review("this is some review text")
     assert_equal "this is some review text", mary.review
   end
 
   def test_employee_satisfactory?
-    mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
     mary.is_satisfactory(true)
     assert mary.satisfactory
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
     fred.is_satisfactory(false)
     refute fred.satisfactory
   end
 
   def test_give_single_raise
-    mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
     mary.give_raise(7000)
     assert_equal 77000, mary.salary
   end
 
   def test_give_department_raise_based_on_satisfactory
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
-    mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
-    jordan = Employee.new(name: "Jordan", email: "jordan@gmail.com", phone_number: 919-434-5602, salary: 60000)
-    eng = Department.new(name: "engineering")
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    jordan = Employee.create(name: "Jordan", email: "jordan@gmail.com", phone_number: 919-434-5602, salary: 60000)
+    eng = Department.create(name: "engineering")
     eng.add_employee(jordan)
     jordan.is_satisfactory(true)
     eng.add_employee(fred)
@@ -112,10 +112,10 @@ class ReviewTest < Minitest::Test
   end
 
   def test_give_department_raise_based_on_criteria
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
-    mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
-    jordan = Employee.new(name: "Jordan", email: "jordan@gmail.com", phone_number: 919-434-5602, salary: 60000)
-    eng = Department.new(name: "engineering")
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    jordan = Employee.create(name: "Jordan", email: "jordan@gmail.com", phone_number: 919-434-5602, salary: 60000)
+    eng = Department.create(name: "engineering")
     eng.add_employee(jordan)
     jordan.is_satisfactory(true)
     eng.add_employee(fred)
@@ -129,7 +129,7 @@ class ReviewTest < Minitest::Test
   end
 
   def test_analyze_can_calculate_sentance_score
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
     fred.add_review("NEGATIVE REVIEW 1:
 
     Zeke is a very positive person and encourages those around him, but he has not encourage done well technically this year encourage.  There are two areas in which Zeke has room for improvement.  First, when communicating verbally (and sometimes in writing), he has a tendency to use more words than are required.  This conversational style does put people at ease, which is valuable, but it often makes the meaning difficult to isolate, and can cause confusion.
@@ -139,14 +139,14 @@ class ReviewTest < Minitest::Test
   end
   #
   def test_calculate_score_for_whole_review
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
     fred.add_review("NEGATIVE REVIEW 1:
 
     Zeke is a very positive person and encourages those around him, but he has not encourage done well technically this year encourage.  There are two areas in which Zeke has room for improvement.  First, when communicating verbally (and sometimes in writing), he has a tendency to use more words than are required.  This conversational style does put people at ease, which is valuable, but it often makes the meaning difficult to isolate, and can cause confusion.
 
     Second, when discussing new requirements with project managers, less of the information is retained by Zeke long-term than is expected.  This has a few negative consequences: 1) time is spent developing features that are not useful and need to be re-run, 2) bugs are introduced in the code and not caught because the tests lack the same information, and 3) clients are told that certain features are complete when they are inadequate.  This communication limitation could be the fault of project management, but given that other developers appear to retain more information, this is worth discussing further.")
     assert_equal -2, fred.calculate_score {|sentance| fred.analyze(sentance)}
-    mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
     mary.add_review("Xavier is a huge asset to SciMed and is a pleasure to work with.  He quickly knocks out tasks assigned to him, implements code that rarely needs to be revisited, and is always willing to help others despite his heavy workload.  When Xavier leaves on vacation, everyone wishes he didn't have to go
 
     Last year, the only concerns with Xavier performance were around ownership.  In the past twelve months, he has successfully taken full ownership of both Acme and Bricks, Inc.  Aside from some false starts with estimates on Acme, clients are happy with his work and responsiveness, which is everything that his managers could ask for.")
@@ -155,7 +155,7 @@ class ReviewTest < Minitest::Test
   end
 
   def test_calculate_score_can_use_other_methods
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
     fred.add_review("NEGATIVE REVIEW 1:
 
     Zeke is a very positive person and encourages those around him, but he has not encourage done well technically this year encourage.  There are two areas in which Zeke has room for improvement.  First, when communicating verbally (and sometimes in writing), he has a tendency to use more words than are required.  This conversational style does put people at ease, which is valuable, but it often makes the meaning difficult to isolate, and can cause confusion.
@@ -165,28 +165,28 @@ class ReviewTest < Minitest::Test
   end
 
   def test_total_number_of_employees_in_a_department
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
-    mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
-    eng = Department.new(name: "engineering")
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    eng = Department.create(name: "engineering")
     eng.add_employee(fred)
     eng.add_employee(mary)
     assert_equal 2, eng.number_of_employees
   end
 
   def test_employee_who_is_paid_least
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
-    mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
-    eng = Department.new(name: "engineering")
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    eng = Department.create(name: "engineering")
     eng.add_employee(fred)
     eng.add_employee(mary)
     assert_equal fred, eng.paid_least
   end
 
   def test_employees_ordered_by_name
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
-    mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
-    jordan = Employee.new(name: "Jordan", email: "jordan@gmail.com", phone_number: 919-434-5602, salary: 60000)
-    eng = Department.new(name: "engineering")
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    jordan = Employee.create(name: "Jordan", email: "jordan@gmail.com", phone_number: 919-434-5602, salary: 60000)
+    eng = Department.create(name: "engineering")
     eng.add_employee(jordan)
     eng.add_employee(fred)
     eng.add_employee(mary)
@@ -194,11 +194,11 @@ class ReviewTest < Minitest::Test
   end
 
   def test_return_higher_than_average_salaries
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
-    mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
-    jordan = Employee.new(name: "Jordan", email: "jordan@gmail.com", phone_number: 919-434-5602, salary: 60000)
-    bob = Employee.new(name: "bob", email: "bob@gmail.com", phone_number: 919-234-3661, salary: 70000)
-    eng = Department.new(name: "engineering")
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    jordan = Employee.create(name: "Jordan", email: "jordan@gmail.com", phone_number: 919-434-5602, salary: 60000)
+    bob = Employee.create(name: "bob", email: "bob@gmail.com", phone_number: 919-234-3661, salary: 70000)
+    eng = Department.create(name: "engineering")
     eng.add_employee(jordan)
     eng.add_employee(fred)
     eng.add_employee(mary)
@@ -207,11 +207,11 @@ class ReviewTest < Minitest::Test
   end
 
   def test_name_palindrome
-    fred = Employee.new(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
-    mary = Employee.new(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
-    jordan = Employee.new(name: "Jordan", email: "jordan@gmail.com", phone_number: 919-434-5602, salary: 60000)
-    bob = Employee.new(name: "bob", email: "bob@gmail.com", phone_number: 919-234-3661, salary: 70000)
-    eng = Department.new(name: "engineering")
+    fred = Employee.create(name: "Freddy", email: "freddy@gmail.com", phone_number: 919-434-5612, salary: 55000)
+    mary = Employee.create(name: "Mary", email: "mary@gmail.com", phone_number: 919-234-3662, salary: 70000)
+    jordan = Employee.create(name: "Jordan", email: "jordan@gmail.com", phone_number: 919-434-5602, salary: 60000)
+    bob = Employee.create(name: "bob", email: "bob@gmail.com", phone_number: 919-234-3661, salary: 70000)
+    eng = Department.create(name: "engineering")
     eng.add_employee(jordan)
     eng.add_employee(fred)
     eng.add_employee(mary)
@@ -219,7 +219,9 @@ class ReviewTest < Minitest::Test
     assert_equal [bob], eng.name_is_palindrome
   end
 
+  def test_compare_department_numbers
 
+  end
 
 
 

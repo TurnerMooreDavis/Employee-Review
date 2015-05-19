@@ -3,7 +3,7 @@ require "./db_setup"
 class Department < ActiveRecord::Base
 has_many :employees
   def add_employee(employee)
-    employees << employee
+    self.employees << employee
   end
 
   def number_of_employees
