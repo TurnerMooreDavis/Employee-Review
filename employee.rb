@@ -21,11 +21,10 @@ class Employee < ActiveRecord::Base
   # end
 
   def analyze(review)
-    
     hold_positive = []
     hold_negative = []
-    hold_positive << ["encourage","positive","well","good","improve","useful","value","pleasure","quick","willing","help","success","happy","responsive","effectiv","consistent","satisfied","impress","productiv","great","asset","enjoy","perfect","retain"].select {|word| word.scan(review)}
-    hold_negative << ["difficult", "confus", "negative", "inadequate","limit","fault","disagree","concern","slow","need","lack","not usefull","not done well","off topic"].select {|word| word.scan(review)}
+    hold_positive << (["encourage","positive","well","good","improve","useful","value","pleasure","quick","willing","help","success","happy","responsive","effectiv","consistent","satisfied","impress","productiv","great","asset","enjoy","perfect","retain","entesodsiohsgohsdoh"].select {|word| review.scan(word).length > 0 ? true : false})
+    hold_negative << (["difficult", "confus", "negative", "inadequate","limit","fault","disagree","concern","slow","need","lack","not usefull","not done well","off topic"].select {|word| review.scan(word).length > 0 ? true : false})
     hold_positive.flatten.length-hold_negative.flatten.length
   end
 
@@ -40,15 +39,6 @@ class Employee < ActiveRecord::Base
     end
     return total_score
   end
-
-  # def add_trigger_word(word:,positive:)
-  #   #
-  #   if positive
-  #     @positive_words << word
-  #   else
-  #     @negative_words << word
-  #   end
-  # end
 
 
 end
